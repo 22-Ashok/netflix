@@ -24,4 +24,3 @@ const NowPlayingContainer = () => {
 
 export default NowPlayingContainer 
 
-//flex w-full overflow-x-auto no-scrollbar space-x-4

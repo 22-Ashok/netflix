@@ -8,12 +8,15 @@ import HomeIcon from '@mui/icons-material/Home';
 import TvIcon from '@mui/icons-material/Tv';
 import TheatersIcon from '@mui/icons-material/Theaters';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import useAllTvShows from '../hooks/useAllTv'
 
 const Header = () => {
     const[search, setSearch] = useState(false);
     const[menuList, setMenuList] = useState(false);
     const[isScroll, setIsScroll] = useState(false);
     useAllMovies();
+    useAllTvShows();
+    
     useEffect(() => {
       window.addEventListener('scroll', () => {
         if(window.scrollY != 0) {
@@ -24,7 +27,7 @@ const Header = () => {
     },[])
 
     return (
-        <div  className = {isScroll ? 'flex justify-between px-10 text-lg max-lg:text-[17px] max-lg:px-6 w-screen font-semibold bg-[#040505] fixed top-0 z-50' : 'flex justify-between px-10 text-lg max-lg:text-[17px] max-lg:px-6 w-screen font-semibold bg-transparent fixed top-0 z-50'}  >
+        <div  className = {isScroll ? 'flex justify-between px-10 text-lg max-lg:text-[17px] max-lg:px-6 w-screen font-semibold bg-[#040505] fixed top-0 z-20' : 'flex justify-between px-10 text-lg max-lg:text-[17px] max-lg:px-6 w-screen font-semibold bg-transparent fixed top-0 z-20'}  >
 
             {/* lg or above screen visible */}
            <div className="flex cursor-pointer max-md:hidden">

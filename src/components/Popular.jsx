@@ -11,7 +11,7 @@ const PopularContainer = ({movies}) => {
             <h1 className="text-white font-semibold text-xl py-3 px-4">Popular</h1>
             <div className="flex w-full overflow-x-auto flex-shrink-0 no-scrollbar">
          {
-            popular.map( (movie,idx) => <MovieList movie={movie} key={idx} /> )
+            popular.map( (movie,idx) => <MovieList movie={movie} key={idx}  /> )
          }
        </div>
         </div>

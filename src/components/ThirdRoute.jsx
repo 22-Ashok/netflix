@@ -9,9 +9,9 @@ const ThirdRoute = () => {
     <div className="bg-[#232424] w-screen min-h-screen px-8">
       <Header />
       <div className="py-10">
-      <PopularContainer />
-      <TopRatedContainer />
       <UpCommingContainer />
+      <TopRatedContainer />
+      <PopularContainer />
       </div>
      
     </div>
