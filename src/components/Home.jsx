@@ -1,4 +1,3 @@
-import { useState } from "react"
 import Header from "./Header"
 import PrimaryContainer from "./PrimaryContainer"
 import SecondaryContainer from "./SecondaryContainer"

@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser, removeUser } from '../redux/slices/userSlice';
 import useAllMovies from "../hooks/useAllMovies"
 import netflixlogo from '../logo/netf.png'
 import netflix from '../logo/netflix.svg'
@@ -14,17 +17,43 @@ const Header = () => {
     const[search, setSearch] = useState(false);
     const[menuList, setMenuList] = useState(false);
     const[isScroll, setIsScroll] = useState(false);
+    const dispatch = useDispatch();
+    const user = useSelector((store) => store.user);
+    const navigate = useNavigate();
+    const auth = getAuth();
     useAllMovies();
     useAllTvShows();
     
     useEffect(() => {
       window.addEventListener('scroll', () => {
         if(window.scrollY != 0) {
-          return setIsScroll(true)
+           setIsScroll(true)
+        } else {
+          setIsScroll(false)
         }
-       return  setIsScroll(false);
       })
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          console.log(user);
+          const{email,displayName,uid} = user
+          console.log(email);
+        dispatch(addUser({email,displayName,uid}))
+        } 
+      });
+
     },[])
+
+    function logOutFunction() {
+      signOut(auth)
+      .then(() => {
+        dispatch(removeUser());
+         navigate('/signin');
+      })
+      .catch((error) => {
+        console.error('Error signing out:', error);
+      });
+    }
 
     return (
         <div  className = {isScroll ? 'flex justify-between px-10 text-lg max-lg:text-[17px] max-lg:px-6 w-screen font-semibold bg-[#040505] fixed top-0 z-20' : 'flex justify-between px-10 text-lg max-lg:text-[17px] max-lg:px-6 w-screen font-semibold bg-transparent fixed top-0 z-20'}  >
@@ -77,8 +106,15 @@ const Header = () => {
              </div> : 
              <SearchIcon className="text-white mr-4 text-opacity-95 hover:opacity-70"  onClick={() => setSearch(!search)} />
             }
-
-            <button className="w-20 h-9 text-white  hover:opacity-85 rounded-md bg-red-800 max-lg:text-sm max-lg:w-16 font-semibold">Sign In</button>
+            
+            { user 
+            ? 
+             <button className="w-20 h-9 text-white  hover:opacity-85 rounded-md bg-red-800 max-lg:text-sm max-lg:w-16 font-semibold" onClick={logOutFunction}> Sign Out </button> : 
+             
+             <button className="w-20 h-9 text-white  hover:opacity-85 rounded-md bg-red-800 max-lg:text-sm max-lg:w-16 font-semibold"> <Link to="/signin">Sign In</Link> </button>
+             
+             }
+            
            
            </div>
         </div>

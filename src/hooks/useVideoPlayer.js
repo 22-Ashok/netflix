@@ -19,14 +19,26 @@ const useVideoPlayer = () => {
   };
   
   const movieTrailer = async () => {
-     const fetchData = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos`,options);
-     const json = await fetchData.json();
-     const results = json.results;
-     dispatch(addYtTrailer(results[0]));
+    try{
+      const fetchData = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos`,options);
+      const json = await fetchData.json();
+      const results = json.results;
+      dispatch(addYtTrailer(results[0]));
+    } 
+    catch (error) { 
+      try{
+        const fetchData = await fetch(`https://api.themoviedb.org/3/tv/${id}/videos`,options);
+        const json = await fetchData.json();
+        const results = json.results;
+        dispatch(addYtTrailer(results[0]));
+      }  catch (error) {
+        console.log("api mot found");
+      }
+    }    
   }
 
   useEffect(() => {
-     movieTrailer();
+   movieTrailer()  
   },[id])
 }
 

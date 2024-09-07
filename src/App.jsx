@@ -3,6 +3,7 @@ import { createBrowserRouter,RouterProvider } from "react-router-dom"
 import SecRoute from './components/SecRoute'
 import ThirdRoute from "./components/ThirdRoute"
 import ForthRoute from "./components/ForthRoute"
+import SignInPage from "./components/SignInPage"
 
 function App() {
 
@@ -18,6 +19,9 @@ function App() {
   },{
     path:'/popular',
     element:<ForthRoute />
+  }, {
+    path:'/signin',
+    element:<SignInPage />
   }])
 
   return (

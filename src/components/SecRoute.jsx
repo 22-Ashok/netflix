@@ -1,15 +1,14 @@
 import Header from './Header'
-import PopularContainer from "./Popular"
-import TopRatedContainer from './TopRatedContainer'
-import UpCommingContainer from './UpComming'
 import TvShows from './Tvshows'
 import TvShows2 from './TvShows2'
 import TvShows3 from './TvShows3'
 import TvShows4 from './TvShows4'
 import TvShows5 from './TvShows5'
+import { useSelector } from "react-redux"
+import CommanPlayer from "./CommanPlayer"
 
 const SecRoute = () => {
-
+  const popUp = useSelector((store) => store.current.movieDetail );
     return (
         <div className="bg-[#232424] w-screen min-h-screen">
           <Header />
@@ -19,10 +18,11 @@ const SecRoute = () => {
           <TvShows3 />
           <TvShows4 />
           <TvShows5 />
+          { popUp && <CommanPlayer /> }
           </div>
          
         </div>
     )
 }
 
-export default SecRoute
+export default SecRoute 

@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react"
 import { useSelector,useDispatch } from "react-redux";
-import {addMovie, removeMovie, addYtTrailer, removeYtDetail } from '../redux/slices/currentMovei'
+import { removeMovie, removeYtDetail } from '../redux/slices/currentMovei'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import AddIcon from '@mui/icons-material/Add';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';

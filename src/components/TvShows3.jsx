@@ -18,4 +18,4 @@ const TvShows3 = () => {
     )
 }
 
-export default TvShows3
+export default TvShows3 
