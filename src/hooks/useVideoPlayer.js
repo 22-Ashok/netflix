@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addYtTrailer } from "../redux/slices/currentMovei";
+import { addYtTrailer, removeMovie } from "../redux/slices/currentMovei";
 
 const useVideoPlayer = () => {
   const movie = useSelector((store) => store.current.movieDetail);
@@ -23,17 +23,16 @@ const useVideoPlayer = () => {
       const fetchData = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos`,options);
       const json = await fetchData.json();
       const results = json.results;
-      dispatch(addYtTrailer(results[0]));
+
+      if(results && results.length>0) {
+        dispatch(addYtTrailer(results[0]));
+      } else {
+        dispatch(removeMovie())
+      }
+      
     } 
     catch (error) { 
-      try{
-        const fetchData = await fetch(`https://api.themoviedb.org/3/tv/${id}/videos`,options);
-        const json = await fetchData.json();
-        const results = json.results;
-        dispatch(addYtTrailer(results[0]));
-      }  catch (error) {
-        console.log("api mot found");
-      }
+     console.log('video not found')
     }    
   }
 

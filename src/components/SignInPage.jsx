@@ -57,7 +57,6 @@ const SignInPage = () => {
             const errorCode = error.code;
             const errorMessage = error.message;
             if(errorMessage == ' Error (auth/invalid-credential).' )
-            console.log('user not found');
           setIsError('user not found');
           });
       }

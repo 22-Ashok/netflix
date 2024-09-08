@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../redux/slices/userSlice';
+import { addSearchMovies, emptySearch } from '../redux/slices/allSearchMoviesSlice'
+
 import useAllMovies from "../hooks/useAllMovies"
 import netflixlogo from '../logo/netf.png'
 import netflix from '../logo/netflix.svg'
@@ -12,18 +14,21 @@ import TvIcon from '@mui/icons-material/Tv';
 import TheatersIcon from '@mui/icons-material/Theaters';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import useAllTvShows from '../hooks/useAllTv'
+import useSearchMovie from '../hooks/useSearchMovie';
 
 const Header = () => {
     const[search, setSearch] = useState(false);
     const[menuList, setMenuList] = useState(false);
     const[isScroll, setIsScroll] = useState(false);
+    const[iptText, setIptText] = useState('');
     const dispatch = useDispatch();
     const user = useSelector((store) => store.user);
     const navigate = useNavigate();
     const auth = getAuth();
+    const debouncedIpt = useSearchMovie(iptText,500);
     useAllMovies();
     useAllTvShows();
-    
+
     useEffect(() => {
       window.addEventListener('scroll', () => {
         if(window.scrollY != 0) {
@@ -35,9 +40,7 @@ const Header = () => {
 
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          console.log(user);
           const{email,displayName,uid} = user
-          console.log(email);
         dispatch(addUser({email,displayName,uid}))
         } 
       });
@@ -51,9 +54,22 @@ const Header = () => {
          navigate('/signin');
       })
       .catch((error) => {
-        console.error('Error signing out:', error);
       });
     }
+
+    const searchData = async () => {
+      if(debouncedIpt) {
+        const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${debouncedIpt}&api_key=396042b24e490871c7ab751d79ae5f45`);
+        const json = await response.json();
+        dispatch(addSearchMovies(json.results))
+      }  else {
+         dispatch(emptySearch());
+      }
+    } 
+
+    useEffect(() => {
+      searchData();
+    },[debouncedIpt])
 
     return (
         <div  className = {isScroll ? 'flex justify-between px-10 text-lg max-lg:text-[17px] max-lg:px-6 w-screen font-semibold bg-[#040505] fixed top-0 z-20' : 'flex justify-between px-10 text-lg max-lg:text-[17px] max-lg:px-6 w-screen font-semibold bg-transparent fixed top-0 z-20'}  >
@@ -102,7 +118,7 @@ const Header = () => {
             { search ? 
              <div className="border border-white mr-3 rounded-sm">
                <SearchIcon className="text-white" onClick={() => setSearch(!search)} />
-               <input type="text" placeholder='search...' className="bg-transparent text-white focus:outline-none text-sm max-lg:w-24" />
+               <input type="text" placeholder='search...' className="bg-transparent text-white focus:outline-none text-sm max-lg:w-24" value={iptText} onChange={(e) => setIptText(e.target.value)} />
              </div> : 
              <SearchIcon className="text-white mr-4 text-opacity-95 hover:opacity-70"  onClick={() => setSearch(!search)} />
             }
@@ -110,11 +126,8 @@ const Header = () => {
             { user 
             ? 
              <button className="w-20 h-9 text-white  hover:opacity-85 rounded-md bg-red-800 max-lg:text-sm max-lg:w-16 font-semibold" onClick={logOutFunction}> Sign Out </button> : 
-             
              <button className="w-20 h-9 text-white  hover:opacity-85 rounded-md bg-red-800 max-lg:text-sm max-lg:w-16 font-semibold"> <Link to="/signin">Sign In</Link> </button>
-             
              }
-            
            
            </div>
         </div>
@@ -122,3 +135,5 @@ const Header = () => {
 }
 
 export default Header
+
+
