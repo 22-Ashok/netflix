@@ -12,24 +12,24 @@ const useAllTvShows = () => {
 };
 
 async function tvShows2(){
-    const fetchData = await fetch("https://api.themoviedb.org/3/discover/tv?page=2",options);
+    const fetchData = await fetch("https://api.themoviedb.org/3/discover/tv?page=2&api_key=396042b24e490871c7ab751d79ae5f45");
     const json = await fetchData.json();
     dispatch(listOne(json.results));
  }
 
  async function tvShows3(){
-    const fetchData = await fetch("https://api.themoviedb.org/3/discover/tv?page=3",options);
+    const fetchData = await fetch("https://api.themoviedb.org/3/discover/tv?page=3&api_key=396042b24e490871c7ab751d79ae5f45");
     const json = await fetchData.json();
     dispatch(listTwo(json.results));
  }
  async function tvShows4(){
-    const fetchData = await fetch("https://api.themoviedb.org/3/discover/tv?page=4",options);
+    const fetchData = await fetch("https://api.themoviedb.org/3/discover/tv?page=4&api_key=396042b24e490871c7ab751d79ae5f45");
     const json = await fetchData.json();
     dispatch(listThree(json.results));
  }
 
  async function tvShows5(){
-    const fetchData = await fetch("https://api.themoviedb.org/3/discover/tv?page=5",options);
+    const fetchData = await fetch("https://api.themoviedb.org/3/discover/tv?page=5&api_key=396042b24e490871c7ab751d79ae5f45");
     const json = await fetchData.json();
     dispatch(listFour(json.results));
  }

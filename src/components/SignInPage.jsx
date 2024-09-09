@@ -96,7 +96,7 @@ const SignInPage = () => {
     <br />
     <input
       type='password'
-      placeholder='password'
+      placeholder='password (example-Password@123)'
       className='w-full my-2 h-10 rounded-md px-2 text-[16px] text-black font-semibold outline-none'
       ref={password}
     />

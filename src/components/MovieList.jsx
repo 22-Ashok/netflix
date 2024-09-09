@@ -11,8 +11,8 @@ const MovieList = ({movie}) => {
 
     return (
         <>
-        <div onClick={toggle} >
-          <div className="w-60 h-40 bg-no-repeat bg-cover mx-1">
+        <div onClick={toggle} className=''>
+          <div className="w-60 h-40 bg-no-repeat bg-cover mx-1 transition ease-in-out duration-300 transform hover:scale-105">
                <img src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt='missing' className="h-full w-full bg-cover"></img>
            </div>
         </div>

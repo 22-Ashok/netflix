@@ -25,16 +25,35 @@ const useVideoPlayer = () => {
       const results = json.results;
 
       if(results && results.length>0) {
-        dispatch(addYtTrailer(results[0]));
+        const trailer = results.find((movie) => movie.type === 'Trailer');
+         trailer ? dispatch(addYtTrailer(trailer)) : dispatch(addYtTrailer(results[0]));
+
       } else {
-        dispatch(removeMovie())
-      }
-      
+        //dispatch(removeMovie());
+        secondCall()
+      }  
     } 
     catch (error) { 
-     console.log('video not found')
+      secondCall();
     }    
   }
+
+  const secondCall = async () => {
+    try {
+      const response = await fetch(`https://api.themoviedb.org/3/tv/${id}/videos?api_key=396042b24e490871c7ab751d79ae5f45`);
+      const json = await response.json();
+      const results = json.results;
+      
+      if (results && results.length > 0) {
+        const trailer = results.find((movie) => movie.type === 'Trailer');
+        trailer ? dispatch(addYtTrailer(trailer)) : dispatch(addYtTrailer(results[0]));
+      } else {
+        dispatch(removeMovie());
+      }
+    } catch (error) {
+      dispatch(removeMovie());
+    }
+  };
 
   useEffect(() => {
    movieTrailer()  

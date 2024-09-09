@@ -21,10 +21,12 @@ const CommanPlayer = () => {
     const {original_title,overview,vote_average,release_date} = movie;
 
       useEffect(() => {
+        
         if (trailer && trailer.key) {
+
           const Player = new window.YT.Player(playerRef.current, {
             height: '390',
-            width: '700',
+            width: window.screen.width > 700 ? '700' : '450' ,
             videoId: trailer.key,  
             playerVars: {
               playsinline: 1,
@@ -74,11 +76,11 @@ const CommanPlayer = () => {
     }
     
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-80 w-screen h-screen flex justify-center items-center z-50 backdrop-blur-sm" onClick={cancelTrailer}>
-        <div className="pb-5 bg-[#1F2020] w-[700px] rounded-md relative" onClick={(e) => e.stopPropagation()}>
+      <div className="fixed inset-0 bg-black bg-opacity-80 w-screen h-screen flex justify-center items-center z-50 backdrop-blur-sm " onClick={cancelTrailer}>
+        <div className="pb-5 bg-[#1F2020] w-[700px] rounded-md relative max-md:w-[450px]" onClick={(e) => e.stopPropagation()}>
           <div className="relative">
             <div ref={playerRef}></div>
-            <div className="absolute right-0 text-white top-0 p-3 cursor-pointer" onClick={cancelTrailer}>
+            <div className="absolute right-4 text-white top-0 p-3 cursor-pointer" onClick={cancelTrailer}>
               <CancelIcon sx={{ fontSize: 30 }} />
             </div>
             <div className="flex justify-between items-center absolute bottom-0 w-full px-4 py-3 bg-gradient-to-t from-black to-transparent">

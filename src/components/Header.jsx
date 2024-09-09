@@ -125,8 +125,8 @@ const Header = () => {
             
             { user 
             ? 
-             <button className="w-20 h-9 text-white  hover:opacity-85 rounded-md bg-red-800 max-lg:text-sm max-lg:w-16 font-semibold" onClick={logOutFunction}> Sign Out </button> : 
-             <button className="w-20 h-9 text-white  hover:opacity-85 rounded-md bg-red-800 max-lg:text-sm max-lg:w-16 font-semibold"> <Link to="/signin">Sign In</Link> </button>
+             <button className="w-20 h-9 text-white  hover:opacity-85 rounded-md bg-red-800 max-lg:text-sm max-lg:w-16 font-semibold transition duration-500 ease-in-out transform hover:scale-105 hover:shadow-lg" onClick={logOutFunction}> Sign Out </button> : 
+             <button className="w-20 h-9 text-white  hover:opacity-85 rounded-md bg-red-800 max-lg:text-sm max-lg:w-16 font-semibold transition duration-500 ease-in-out transform hover:scale-105 hover:shadow-lg"> <Link to="/signin">Sign In</Link> </button>
              }
            
            </div>

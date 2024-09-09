@@ -4,11 +4,12 @@ import TopRatedContainer from './TopRatedContainer'
 import UpCommingContainer from './UpComming'
 import { useSelector } from "react-redux"
 import CommanPlayer from "./CommanPlayer"
+import Footer from './Footer'
 
 const ForthRoute = () => {
   const popUp = useSelector((store) => store.current.movieDetail )
   return (
-    <div className="bg-[#232424] w-screen min-h-screen px-8">
+    <div className="bg-[#131313] w-screen min-h-screen">
       <Header />
       <div className="py-10">
       <PopularContainer />
@@ -16,7 +17,7 @@ const ForthRoute = () => {
       <UpCommingContainer />
       { popUp && <CommanPlayer /> }
       </div>
-     
+     <Footer />
     </div>
 )
 }
